@@ -1,0 +1,37 @@
+---
+title: "antaresRead 2.1.0 More Examples"
+author: "Jalal-Edine ZAWAM"
+date: "22 mars 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Links 
+
+## How to get the value of maximum flow capacity for a link ? 
+
+Import your data 
+```{r param, echo=FALSE}
+
+pathStudy<-"E:\\ANTARES\\Exemple_antares\\2_exemple_etudes_importantes\\TYNDP\\ST2030\\ST2030"
+
+```
+
+
+```{r import, echo=TRUE}
+library(antaresRead)
+#pathStudy path to my study 
+suppressWarnings(opts<-setSimulationPath(pathStudy,-1))
+myData<-suppressWarnings(readAntares(links = "all", linkCapacity = TRUE, showProgress = FALSE))
+```
+
+Get the maximum flow capacity for a link
+
+
+```{r maximumFlow, echo=TRUE}
+max(myData[link=="0_pump_daily - fr", transCapacityDirect])
+max(myData[link=="0_pump_daily - fr", transCapacityIndirect])
+```
