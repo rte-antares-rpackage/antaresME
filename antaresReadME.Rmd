@@ -43,7 +43,7 @@ write.csv2(file="myFileArea.csv", myData$areas[area=="fr",])
 write.csv2(file="myFileLink.csv", myData$links[link=="0_pump_daily - fr", ])
 ```
 
-## How can I know the type and class of my object ? 
+## How can I know the type and class of my ANTARES object ? 
 
 If you import areas and links you will get an antaresDataList. You can find more information about antareDataList with the help of the function `as.antaresDataList` in the package antaresRead. 
 If you import only areas or links you will get an antaresDataTable. An antaresDataTable is also a data.table and a data.frame. If you don't know what's a data.table you can find more information [here](https://github.com/Rdatatable/data.table/wiki). If you don't know what's a data.frame you can find more information [here](http://www.r-tutor.com/r-introduction/data-frame). We advise you to use the data.table features. 
