@@ -2,28 +2,57 @@
 title: "antaresRead 2.1.0 More Examples"
 author: "Jalal-Edine ZAWAM"
 date: "22 mars 2018"
-output: html_document
+output:
+    html_document:
+      number_sections: yes
+      toc: yes
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Links 
-
-## How to get the value of maximum flow capacity for a link ? 
-
-Import your data 
 ```{r param, echo=FALSE}
 
+#param of all examples
 pathStudy<-"E:\\ANTARES\\Exemple_antares\\2_exemple_etudes_importantes\\TYNDP\\ST2030\\ST2030"
 
 ```
 
 
-```{r import, echo=TRUE}
+# Areas and Links
+
+
+## How to write some variables in a csv file ? 
+
+Import your data 
+
+```{r importExCsv, echo=TRUE}
 library(antaresRead)
-#pathStudy path to my study 
+#pathStudy : path to my study 
+suppressWarnings(opts<-setSimulationPath(pathStudy,-1))
+myData<-suppressWarnings(readAntares(areas = "all", links = "all", showProgress = FALSE, select = c("economy", "FLOW LIN.", "CONG. PROB +", "CONG. PROB -")))
+```
+
+Write some variables 
+
+
+```{r writeCsv, echo=TRUE}
+
+write.csv2(file="myFileArea.csv", myData$areas[area=="fr",])
+write.csv2(file="myFileLink.csv", myData$links[link=="0_pump_daily - fr", ])
+```
+
+
+
+# Links 
+
+## How to get the value of maximum flow capacity for a link ? 
+
+Import your data 
+```{r importCapaLink, echo=TRUE}
+library(antaresRead)
+#pathStudy : path to my study 
 suppressWarnings(opts<-setSimulationPath(pathStudy,-1))
 myData<-suppressWarnings(readAntares(links = "all", linkCapacity = TRUE, showProgress = FALSE))
 ```

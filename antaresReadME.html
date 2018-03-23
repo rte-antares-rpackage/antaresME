@@ -124,14 +124,38 @@ $(document).ready(function () {
 
 </div>
 
+<div id="TOC">
+<ul>
+<li><a href="#areas-and-links"><span class="toc-section-number">1</span> Areas and Links</a><ul>
+<li><a href="#how-to-write-some-variables-in-a-csv-file"><span class="toc-section-number">1.1</span> How to write some variables in a csv file ?</a></li>
+</ul></li>
+<li><a href="#links"><span class="toc-section-number">2</span> Links</a><ul>
+<li><a href="#how-to-get-the-value-of-maximum-flow-capacity-for-a-link"><span class="toc-section-number">2.1</span> How to get the value of maximum flow capacity for a link ?</a></li>
+</ul></li>
+</ul>
+</div>
 
-<div id="links" class="section level1">
-<h1>Links</h1>
-<div id="how-to-get-the-value-of-maximum-flow-capacity-for-a-link" class="section level2">
-<h2>How to get the value of maximum flow capacity for a link ?</h2>
+<div id="areas-and-links" class="section level1">
+<h1><span class="header-section-number">1</span> Areas and Links</h1>
+<div id="how-to-write-some-variables-in-a-csv-file" class="section level2">
+<h2><span class="header-section-number">1.1</span> How to write some variables in a csv file ?</h2>
 <p>Import your data</p>
 <pre class="r"><code>library(antaresRead)
-#pathStudy path to my study 
+#pathStudy : path to my study 
+suppressWarnings(opts&lt;-setSimulationPath(pathStudy,-1))
+myData&lt;-suppressWarnings(readAntares(areas = &quot;all&quot;, links = &quot;all&quot;, showProgress = FALSE, select = c(&quot;economy&quot;, &quot;FLOW LIN.&quot;, &quot;CONG. PROB +&quot;, &quot;CONG. PROB -&quot;)))</code></pre>
+<p>Write some variables</p>
+<pre class="r"><code>write.csv2(file=&quot;myFileArea.csv&quot;, myData$areas[area==&quot;fr&quot;,])
+write.csv2(file=&quot;myFileLink.csv&quot;, myData$links[link==&quot;0_pump_daily - fr&quot;, ])</code></pre>
+</div>
+</div>
+<div id="links" class="section level1">
+<h1><span class="header-section-number">2</span> Links</h1>
+<div id="how-to-get-the-value-of-maximum-flow-capacity-for-a-link" class="section level2">
+<h2><span class="header-section-number">2.1</span> How to get the value of maximum flow capacity for a link ?</h2>
+<p>Import your data</p>
+<pre class="r"><code>library(antaresRead)
+#pathStudy : path to my study 
 suppressWarnings(opts&lt;-setSimulationPath(pathStudy,-1))
 myData&lt;-suppressWarnings(readAntares(links = &quot;all&quot;, linkCapacity = TRUE, showProgress = FALSE))</code></pre>
 <p>Get the maximum flow capacity for a link</p>
