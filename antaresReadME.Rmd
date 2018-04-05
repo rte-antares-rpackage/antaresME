@@ -22,6 +22,73 @@ pathStudy<-"E:\\ANTARES\\Exemple_antares\\2_exemple_etudes_importantes\\TYNDP\\S
 
 # Areas and Links
 
+## How to import daily, weekly, monthly and annual data ? 
+
+Import daily data  
+
+```{r importDailyData, echo=TRUE}
+library(antaresRead)
+#pathStudy : path to my study 
+suppressWarnings(opts<-setSimulationPath(pathStudy,-1))
+myData<-suppressWarnings(readAntares(areas = "fr", links = "all", timeStep = "daily", showProgress = FALSE))
+```
+
+Check your import 
+
+```{r CheckDailyData, echo=TRUE}
+
+length(myData$areas$time)
+```
+
+
+Import weekly data  
+
+```{r importWeeklyData, echo=TRUE}
+library(antaresRead)
+#pathStudy : path to my study 
+suppressWarnings(opts<-setSimulationPath(pathStudy,-1))
+myData<-suppressWarnings(readAntares(areas = "fr", links = "all", timeStep = "weekly", showProgress = FALSE))
+```
+
+Check your import 
+
+```{r CheckWeeklyData, echo=TRUE}
+
+length(myData$areas$time)
+```
+
+Import monthly data  
+
+```{r importMonthlyData, echo=TRUE}
+library(antaresRead)
+#pathStudy : path to my study 
+suppressWarnings(opts<-setSimulationPath(pathStudy,-1))
+myData<-suppressWarnings(readAntares(areas = "fr", links = "all", timeStep = "monthly", showProgress = FALSE))
+```
+
+Check your import 
+
+```{r CheckMonthlyData, echo=TRUE}
+
+length(myData$areas$time)
+```
+
+Import annual data  
+
+```{r importAnnualData, echo=TRUE}
+library(antaresRead)
+#pathStudy : path to my study 
+suppressWarnings(opts<-setSimulationPath(pathStudy,-1))
+myData<-suppressWarnings(readAntares(areas = "fr", links = "all", timeStep = "annual", showProgress = FALSE))
+```
+
+Check your import 
+
+```{r CheckAnnualData, echo=TRUE}
+
+length(myData$areas$time)
+```
+
 
 ## How to write some variables in a csv file ? 
 

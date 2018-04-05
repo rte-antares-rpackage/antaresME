@@ -127,8 +127,9 @@ $(document).ready(function () {
 <div id="TOC">
 <ul>
 <li><a href="#areas-and-links"><span class="toc-section-number">1</span> Areas and Links</a><ul>
-<li><a href="#how-to-write-some-variables-in-a-csv-file"><span class="toc-section-number">1.1</span> How to write some variables in a csv file ?</a></li>
-<li><a href="#how-can-i-know-the-type-and-class-of-my-object"><span class="toc-section-number">1.2</span> How can I know the type and class of my object ?</a></li>
+<li><a href="#how-to-import-daily-weekly-monthly-and-annual-data"><span class="toc-section-number">1.1</span> How to import daily, weekly, monthly and annual data ?</a></li>
+<li><a href="#how-to-write-some-variables-in-a-csv-file"><span class="toc-section-number">1.2</span> How to write some variables in a csv file ?</a></li>
+<li><a href="#how-can-i-know-the-type-and-class-of-my-antares-object"><span class="toc-section-number">1.3</span> How can I know the type and class of my ANTARES object ?</a></li>
 </ul></li>
 <li><a href="#links"><span class="toc-section-number">2</span> Links</a><ul>
 <li><a href="#how-to-get-the-value-of-maximum-flow-capacity-for-a-link"><span class="toc-section-number">2.1</span> How to get the value of maximum flow capacity for a link ?</a></li>
@@ -138,8 +139,43 @@ $(document).ready(function () {
 
 <div id="areas-and-links" class="section level1">
 <h1><span class="header-section-number">1</span> Areas and Links</h1>
+<div id="how-to-import-daily-weekly-monthly-and-annual-data" class="section level2">
+<h2><span class="header-section-number">1.1</span> How to import daily, weekly, monthly and annual data ?</h2>
+<p>Import daily data</p>
+<pre class="r"><code>library(antaresRead)
+#pathStudy : path to my study 
+suppressWarnings(opts&lt;-setSimulationPath(pathStudy,-1))
+myData&lt;-suppressWarnings(readAntares(areas = &quot;fr&quot;, links = &quot;all&quot;, timeStep = &quot;daily&quot;, showProgress = FALSE))</code></pre>
+<p>Check your import</p>
+<pre class="r"><code>length(myData$areas$time)</code></pre>
+<pre><code>## [1] 364</code></pre>
+<p>Import weekly data</p>
+<pre class="r"><code>library(antaresRead)
+#pathStudy : path to my study 
+suppressWarnings(opts&lt;-setSimulationPath(pathStudy,-1))
+myData&lt;-suppressWarnings(readAntares(areas = &quot;fr&quot;, links = &quot;all&quot;, timeStep = &quot;weekly&quot;, showProgress = FALSE))</code></pre>
+<p>Check your import</p>
+<pre class="r"><code>length(myData$areas$time)</code></pre>
+<pre><code>## [1] 52</code></pre>
+<p>Import monthly data</p>
+<pre class="r"><code>library(antaresRead)
+#pathStudy : path to my study 
+suppressWarnings(opts&lt;-setSimulationPath(pathStudy,-1))
+myData&lt;-suppressWarnings(readAntares(areas = &quot;fr&quot;, links = &quot;all&quot;, timeStep = &quot;monthly&quot;, showProgress = FALSE))</code></pre>
+<p>Check your import</p>
+<pre class="r"><code>length(myData$areas$time)</code></pre>
+<pre><code>## [1] 12</code></pre>
+<p>Import annual data</p>
+<pre class="r"><code>library(antaresRead)
+#pathStudy : path to my study 
+suppressWarnings(opts&lt;-setSimulationPath(pathStudy,-1))
+myData&lt;-suppressWarnings(readAntares(areas = &quot;fr&quot;, links = &quot;all&quot;, timeStep = &quot;annual&quot;, showProgress = FALSE))</code></pre>
+<p>Check your import</p>
+<pre class="r"><code>length(myData$areas$time)</code></pre>
+<pre><code>## [1] 1</code></pre>
+</div>
 <div id="how-to-write-some-variables-in-a-csv-file" class="section level2">
-<h2><span class="header-section-number">1.1</span> How to write some variables in a csv file ?</h2>
+<h2><span class="header-section-number">1.2</span> How to write some variables in a csv file ?</h2>
 <p>Import your data</p>
 <pre class="r"><code>library(antaresRead)
 #pathStudy : path to my study 
@@ -149,8 +185,8 @@ myData&lt;-suppressWarnings(readAntares(areas = &quot;all&quot;, links = &quot;a
 <pre class="r"><code>write.csv2(file=&quot;myFileArea.csv&quot;, myData$areas[area==&quot;fr&quot;,])
 write.csv2(file=&quot;myFileLink.csv&quot;, myData$links[link==&quot;0_pump_daily - fr&quot;, ])</code></pre>
 </div>
-<div id="how-can-i-know-the-type-and-class-of-my-object" class="section level2">
-<h2><span class="header-section-number">1.2</span> How can I know the type and class of my object ?</h2>
+<div id="how-can-i-know-the-type-and-class-of-my-antares-object" class="section level2">
+<h2><span class="header-section-number">1.3</span> How can I know the type and class of my ANTARES object ?</h2>
 <p>If you import areas and links you will get an antaresDataList. You can find more information about antareDataList with the help of the function <code>as.antaresDataList</code> in the package antaresRead. If you import only areas or links you will get an antaresDataTable. An antaresDataTable is also a data.table and a data.frame. If you don’t know what’s a data.table you can find more information <a href="https://github.com/Rdatatable/data.table/wiki">here</a>. If you don’t know what’s a data.frame you can find more information <a href="http://www.r-tutor.com/r-introduction/data-frame">here</a>. We advise you to use the data.table features.</p>
 <pre class="r"><code>library(antaresRead)
 #pathStudy : path to my study 
