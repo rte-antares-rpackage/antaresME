@@ -162,7 +162,7 @@ names(myData$areas)
 names(myData$links)
 ```
 
-## How can I edit an existing column in an antaresData or in an data.table ? 
+## How can I edit an existing column in an antaresData or in a data.table ? 
 
 Import your data 
 

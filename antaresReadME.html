@@ -131,7 +131,7 @@ $(document).ready(function () {
 <li><a href="#how-to-write-some-variables-in-a-csv-file"><span class="toc-section-number">1.2</span> How to write some variables in a csv file ?</a></li>
 <li><a href="#how-can-i-know-the-type-and-class-of-my-antares-object"><span class="toc-section-number">1.3</span> How can I know the type and class of my ANTARES object ?</a></li>
 <li><a href="#how-can-i-get-the-names-of-the-columns"><span class="toc-section-number">1.4</span> How can I get the names of the columns ?</a></li>
-<li><a href="#how-can-i-edit-an-existing-column-in-an-antaresdata-or-in-an-data.table"><span class="toc-section-number">1.5</span> How can I edit an existing column in an antaresData or in an data.table ?</a></li>
+<li><a href="#how-can-i-edit-an-existing-column-in-an-antaresdata-or-in-a-data.table"><span class="toc-section-number">1.5</span> How can I edit an existing column in an antaresData or in a data.table ?</a></li>
 <li><a href="#how-can-i-add-a-new-column-in-an-antaresdata-or-in-a-data.table"><span class="toc-section-number">1.6</span> How can I add a new column in an antaresData or in a data.table ?</a></li>
 </ul></li>
 <li><a href="#links"><span class="toc-section-number">2</span> Links</a><ul>
@@ -232,8 +232,8 @@ myData&lt;-suppressWarnings(readAntares(areas = &quot;all&quot;, links = &quot;a
 ## [5] &quot;month&quot;        &quot;hour&quot;         &quot;FLOW LIN.&quot;    &quot;CONG. PROB +&quot;
 ## [9] &quot;CONG. PROB -&quot;</code></pre>
 </div>
-<div id="how-can-i-edit-an-existing-column-in-an-antaresdata-or-in-an-data.table" class="section level2">
-<h2><span class="header-section-number">1.5</span> How can I edit an existing column in an antaresData or in an data.table ?</h2>
+<div id="how-can-i-edit-an-existing-column-in-an-antaresdata-or-in-a-data.table" class="section level2">
+<h2><span class="header-section-number">1.5</span> How can I edit an existing column in an antaresData or in a data.table ?</h2>
 <p>Import your data</p>
 <pre class="r"><code>library(antaresRead)
 #pathStudy : path to my study 
@@ -298,10 +298,10 @@ myData</code></pre>
 ## 17:         NA           NA
 ## 18:         NA           NA</code></pre>
 <p>Edit an existing column</p>
-<pre class="r"><code>#When co2 is na, replace the value by 0
-dim(myData[is.na(co2), ])[1]</code></pre>
+<pre class="r"><code>dim(myData[is.na(co2), ])[1]</code></pre>
 <pre><code>## [1] 4</code></pre>
-<pre class="r"><code>myData[is.na(co2), co2:=0]
+<pre class="r"><code>#When co2 is na, replace the value by 0
+myData[is.na(co2), co2:=0]
 
 dim(myData[is.na(co2), ])[1]==0</code></pre>
 <pre><code>## [1] TRUE</code></pre>
