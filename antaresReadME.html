@@ -130,6 +130,9 @@ $(document).ready(function () {
 <li><a href="#how-to-import-daily-weekly-monthly-and-annual-data"><span class="toc-section-number">1.1</span> How to import daily, weekly, monthly and annual data ?</a></li>
 <li><a href="#how-to-write-some-variables-in-a-csv-file"><span class="toc-section-number">1.2</span> How to write some variables in a csv file ?</a></li>
 <li><a href="#how-can-i-know-the-type-and-class-of-my-antares-object"><span class="toc-section-number">1.3</span> How can I know the type and class of my ANTARES object ?</a></li>
+<li><a href="#how-can-i-get-the-names-of-the-columns"><span class="toc-section-number">1.4</span> How can I get the names of the columns ?</a></li>
+<li><a href="#how-can-i-edit-an-existing-column-in-an-antaresdata-or-in-an-data.table"><span class="toc-section-number">1.5</span> How can I edit an existing column in an antaresData or in an data.table ?</a></li>
+<li><a href="#how-can-i-add-a-new-column-in-an-antaresdata-or-in-a-data.table"><span class="toc-section-number">1.6</span> How can I add a new column in an antaresData or in a data.table ?</a></li>
 </ul></li>
 <li><a href="#links"><span class="toc-section-number">2</span> Links</a><ul>
 <li><a href="#how-to-get-the-value-of-maximum-flow-capacity-for-a-link"><span class="toc-section-number">2.1</span> How to get the value of maximum flow capacity for a link ?</a></li>
@@ -211,6 +214,229 @@ myDataTL&lt;-suppressWarnings(readAntares(links = &quot;all&quot;, showProgress 
 ## [4] &quot;data.frame&quot;</code></pre>
 <pre class="r"><code>typeof(myDataTL)</code></pre>
 <pre><code>## [1] &quot;list&quot;</code></pre>
+</div>
+<div id="how-can-i-get-the-names-of-the-columns" class="section level2">
+<h2><span class="header-section-number">1.4</span> How can I get the names of the columns ?</h2>
+<p>Import your data</p>
+<pre class="r"><code>library(antaresRead)
+#pathStudy : path to my study 
+suppressWarnings(opts&lt;-setSimulationPath(pathStudyL,-1))
+myData&lt;-suppressWarnings(readAntares(areas = &quot;all&quot;, links = &quot;all&quot;, showProgress = FALSE, select = c(&quot;economy&quot;, &quot;FLOW LIN.&quot;, &quot;CONG. PROB +&quot;, &quot;CONG. PROB -&quot;)))</code></pre>
+<p>Check the list</p>
+<pre class="r"><code>names(myData$areas)</code></pre>
+<pre><code>##  [1] &quot;area&quot;       &quot;timeId&quot;     &quot;time&quot;       &quot;day&quot;        &quot;month&quot;     
+##  [6] &quot;hour&quot;       &quot;OV. COST&quot;   &quot;OP. COST&quot;   &quot;MRG. PRICE&quot; &quot;CO2 EMIS.&quot; 
+## [11] &quot;BALANCE&quot;    &quot;SPIL. ENRG&quot;</code></pre>
+<pre class="r"><code>names(myData$links)</code></pre>
+<pre><code>## [1] &quot;link&quot;         &quot;timeId&quot;       &quot;time&quot;         &quot;day&quot;         
+## [5] &quot;month&quot;        &quot;hour&quot;         &quot;FLOW LIN.&quot;    &quot;CONG. PROB +&quot;
+## [9] &quot;CONG. PROB -&quot;</code></pre>
+</div>
+<div id="how-can-i-edit-an-existing-column-in-an-antaresdata-or-in-an-data.table" class="section level2">
+<h2><span class="header-section-number">1.5</span> How can I edit an existing column in an antaresData or in an data.table ?</h2>
+<p>Import your data</p>
+<pre class="r"><code>library(antaresRead)
+#pathStudy : path to my study 
+suppressWarnings(opts&lt;-setSimulationPath(pathStudyL,-1))
+myData&lt;-suppressWarnings(readClusterDesc())
+myData</code></pre>
+<pre><code>##          area               cluster      group unitcount nominalcapacity
+##  1:         a                  base    Lignite        44            1000
+##  2:         a         base_must_run    Lignite         2            1000
+##  3:         a                  peak        Oil        15            1000
+##  4:         a peak_must_run_partial        Oil         1            1000
+##  5:         a             semi base Mixed fuel        30            1000
+##  6:         b                  base    Lignite        44            1000
+##  7:         b                  peak        Oil        15            1000
+##  8:         b             semi base Mixed fuel        30            1000
+##  9:         c                  base    Lignite        44            1000
+## 10:         c                  peak        Oil        15            1000
+## 11:         c             semi base Mixed fuel        30            1000
+## 12:         d                  base    Lignite        44            1000
+## 13:         d                  peak        Oil        15            1000
+## 14:         d             semi base Mixed fuel        30            1000
+## 15:    psp in                psp_in      Other         1            6000
+## 16:  psp in-2              psp_in_2      Other         1            3000
+## 17:   psp out               psp_out      Other         1            6000
+## 18: psp out-2             psp_out_2      Other         1            3000
+##     min.stable.power spinning co2 marginal.cost market.bid.cost must.run
+##  1:               52        3 1.2         35.00           35.00       NA
+##  2:               NA       NA 1.2         35.00           35.00     TRUE
+##  3:               NA       NA 0.7         80.00           80.00       NA
+##  4:               NA       NA 0.7         80.00           80.00       NA
+##  5:               NA       NA 0.6         50.00           50.00       NA
+##  6:               NA       NA 1.2         35.00           35.00       NA
+##  7:               NA       NA 0.7         80.00           80.00       NA
+##  8:               NA       NA 0.6         50.00           50.00       NA
+##  9:               26        2 1.2         35.00           35.00       NA
+## 10:               NA       NA 0.7         80.00           80.00       NA
+## 11:               36       NA 0.6         50.00           50.00       NA
+## 12:               26        2 1.2         35.00           35.00       NA
+## 13:               NA       NA 0.7         80.00           80.00       NA
+## 14:               36       NA 0.6         50.00           50.00       NA
+## 15:               NA       NA  NA            NA              NA       NA
+## 16:               NA       NA  NA            NA              NA       NA
+## 17:               NA       NA  NA          0.01            0.01       NA
+## 18:               NA       NA  NA          0.01            0.01       NA
+##     fixed.cost startup.cost
+##  1:         NA           NA
+##  2:         NA           NA
+##  3:         NA           NA
+##  4:         NA           NA
+##  5:         NA           NA
+##  6:         NA           NA
+##  7:         NA           NA
+##  8:         NA           NA
+##  9:          1            1
+## 10:          1            1
+## 11:          1            1
+## 12:          1            1
+## 13:          1            1
+## 14:          1            1
+## 15:         NA           NA
+## 16:         NA           NA
+## 17:         NA           NA
+## 18:         NA           NA</code></pre>
+<p>Edit an existing column</p>
+<pre class="r"><code>#When co2 is na, replace the value by 0
+dim(myData[is.na(co2), ])[1]</code></pre>
+<pre><code>## [1] 4</code></pre>
+<pre class="r"><code>myData[is.na(co2), co2:=0]
+
+dim(myData[is.na(co2), ])[1]==0</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code>myData</code></pre>
+<pre><code>##          area               cluster      group unitcount nominalcapacity
+##  1:         a                  base    Lignite        44            1000
+##  2:         a         base_must_run    Lignite         2            1000
+##  3:         a                  peak        Oil        15            1000
+##  4:         a peak_must_run_partial        Oil         1            1000
+##  5:         a             semi base Mixed fuel        30            1000
+##  6:         b                  base    Lignite        44            1000
+##  7:         b                  peak        Oil        15            1000
+##  8:         b             semi base Mixed fuel        30            1000
+##  9:         c                  base    Lignite        44            1000
+## 10:         c                  peak        Oil        15            1000
+## 11:         c             semi base Mixed fuel        30            1000
+## 12:         d                  base    Lignite        44            1000
+## 13:         d                  peak        Oil        15            1000
+## 14:         d             semi base Mixed fuel        30            1000
+## 15:    psp in                psp_in      Other         1            6000
+## 16:  psp in-2              psp_in_2      Other         1            3000
+## 17:   psp out               psp_out      Other         1            6000
+## 18: psp out-2             psp_out_2      Other         1            3000
+##     min.stable.power spinning co2 marginal.cost market.bid.cost must.run
+##  1:               52        3 1.2         35.00           35.00       NA
+##  2:               NA       NA 1.2         35.00           35.00     TRUE
+##  3:               NA       NA 0.7         80.00           80.00       NA
+##  4:               NA       NA 0.7         80.00           80.00       NA
+##  5:               NA       NA 0.6         50.00           50.00       NA
+##  6:               NA       NA 1.2         35.00           35.00       NA
+##  7:               NA       NA 0.7         80.00           80.00       NA
+##  8:               NA       NA 0.6         50.00           50.00       NA
+##  9:               26        2 1.2         35.00           35.00       NA
+## 10:               NA       NA 0.7         80.00           80.00       NA
+## 11:               36       NA 0.6         50.00           50.00       NA
+## 12:               26        2 1.2         35.00           35.00       NA
+## 13:               NA       NA 0.7         80.00           80.00       NA
+## 14:               36       NA 0.6         50.00           50.00       NA
+## 15:               NA       NA 0.0            NA              NA       NA
+## 16:               NA       NA 0.0            NA              NA       NA
+## 17:               NA       NA 0.0          0.01            0.01       NA
+## 18:               NA       NA 0.0          0.01            0.01       NA
+##     fixed.cost startup.cost
+##  1:         NA           NA
+##  2:         NA           NA
+##  3:         NA           NA
+##  4:         NA           NA
+##  5:         NA           NA
+##  6:         NA           NA
+##  7:         NA           NA
+##  8:         NA           NA
+##  9:          1            1
+## 10:          1            1
+## 11:          1            1
+## 12:          1            1
+## 13:          1            1
+## 14:          1            1
+## 15:         NA           NA
+## 16:         NA           NA
+## 17:         NA           NA
+## 18:         NA           NA</code></pre>
+</div>
+<div id="how-can-i-add-a-new-column-in-an-antaresdata-or-in-a-data.table" class="section level2">
+<h2><span class="header-section-number">1.6</span> How can I add a new column in an antaresData or in a data.table ?</h2>
+<p>Import your data</p>
+<pre class="r"><code>library(antaresRead)
+#pathStudy : path to my study 
+suppressWarnings(opts&lt;-setSimulationPath(pathStudyL,-1))
+myData&lt;-suppressWarnings(readAntares(areas = &quot;all&quot;, links = &quot;all&quot;, showProgress = FALSE, select = c(&quot;allAreas&quot;, &quot;FLOW LIN.&quot;, &quot;CONG. PROB +&quot;, &quot;CONG. PROB -&quot;)))</code></pre>
+<p>Add a new column</p>
+<pre class="r"><code>names(myData$areas)</code></pre>
+<pre><code>##   [1] &quot;area&quot;           &quot;timeId&quot;         &quot;time&quot;           &quot;day&quot;           
+##   [5] &quot;month&quot;          &quot;hour&quot;           &quot;OV. COST&quot;       &quot;OP. COST&quot;      
+##   [9] &quot;OP. COST_std&quot;   &quot;OP. COST_min&quot;   &quot;OP. COST_max&quot;   &quot;MRG. PRICE&quot;    
+##  [13] &quot;MRG. PRICE_std&quot; &quot;MRG. PRICE_min&quot; &quot;MRG. PRICE_max&quot; &quot;CO2 EMIS.&quot;     
+##  [17] &quot;BALANCE&quot;        &quot;BALANCE_std&quot;    &quot;BALANCE_min&quot;    &quot;BALANCE_max&quot;   
+##  [21] &quot;ROW BAL.&quot;       &quot;PSP&quot;            &quot;MISC. NDG&quot;      &quot;LOAD&quot;          
+##  [25] &quot;LOAD_std&quot;       &quot;LOAD_min&quot;       &quot;LOAD_max&quot;       &quot;H. ROR&quot;        
+##  [29] &quot;H. ROR_std&quot;     &quot;H. ROR_min&quot;     &quot;H. ROR_max&quot;     &quot;WIND&quot;          
+##  [33] &quot;WIND_std&quot;       &quot;WIND_min&quot;       &quot;WIND_max&quot;       &quot;SOLAR&quot;         
+##  [37] &quot;SOLAR_std&quot;      &quot;SOLAR_min&quot;      &quot;SOLAR_max&quot;      &quot;NUCLEAR&quot;       
+##  [41] &quot;NUCLEAR_std&quot;    &quot;NUCLEAR_min&quot;    &quot;NUCLEAR_max&quot;    &quot;LIGNITE&quot;       
+##  [45] &quot;LIGNITE_std&quot;    &quot;LIGNITE_min&quot;    &quot;LIGNITE_max&quot;    &quot;COAL&quot;          
+##  [49] &quot;COAL_std&quot;       &quot;COAL_min&quot;       &quot;COAL_max&quot;       &quot;GAS&quot;           
+##  [53] &quot;GAS_std&quot;        &quot;GAS_min&quot;        &quot;GAS_max&quot;        &quot;OIL&quot;           
+##  [57] &quot;OIL_std&quot;        &quot;OIL_min&quot;        &quot;OIL_max&quot;        &quot;MIX. FUEL&quot;     
+##  [61] &quot;MIX. FUEL_std&quot;  &quot;MIX. FUEL_min&quot;  &quot;MIX. FUEL_max&quot;  &quot;MISC. DTG&quot;     
+##  [65] &quot;MISC. DTG_std&quot;  &quot;MISC. DTG_min&quot;  &quot;MISC. DTG_max&quot;  &quot;H. STOR&quot;       
+##  [69] &quot;H. STOR_std&quot;    &quot;H. STOR_min&quot;    &quot;H. STOR_max&quot;    &quot;UNSP. ENRG&quot;    
+##  [73] &quot;UNSP. ENRG_std&quot; &quot;UNSP. ENRG_min&quot; &quot;UNSP. ENRG_max&quot; &quot;SPIL. ENRG&quot;    
+##  [77] &quot;SPIL. ENRG_std&quot; &quot;SPIL. ENRG_min&quot; &quot;SPIL. ENRG_max&quot; &quot;LOLD&quot;          
+##  [81] &quot;LOLD_std&quot;       &quot;LOLD_min&quot;       &quot;LOLD_max&quot;       &quot;LOLP&quot;          
+##  [85] &quot;AVL DTG&quot;        &quot;AVL DTG_std&quot;    &quot;AVL DTG_min&quot;    &quot;AVL DTG_max&quot;   
+##  [89] &quot;DTG MRG&quot;        &quot;DTG MRG_std&quot;    &quot;DTG MRG_min&quot;    &quot;DTG MRG_max&quot;   
+##  [93] &quot;MAX MRG&quot;        &quot;MAX MRG_std&quot;    &quot;MAX MRG_min&quot;    &quot;MAX MRG_max&quot;   
+##  [97] &quot;NP COST&quot;        &quot;NP COST_std&quot;    &quot;NP COST_min&quot;    &quot;NP COST_max&quot;   
+## [101] &quot;NODU&quot;           &quot;NODU_std&quot;       &quot;NODU_min&quot;       &quot;NODU_max&quot;</code></pre>
+<pre class="r"><code>myData$areas[, newColumn:=LOAD*0.5+WIND-SOLAR]
+names(myData$areas)</code></pre>
+<pre><code>##   [1] &quot;area&quot;           &quot;timeId&quot;         &quot;time&quot;           &quot;day&quot;           
+##   [5] &quot;month&quot;          &quot;hour&quot;           &quot;OV. COST&quot;       &quot;OP. COST&quot;      
+##   [9] &quot;OP. COST_std&quot;   &quot;OP. COST_min&quot;   &quot;OP. COST_max&quot;   &quot;MRG. PRICE&quot;    
+##  [13] &quot;MRG. PRICE_std&quot; &quot;MRG. PRICE_min&quot; &quot;MRG. PRICE_max&quot; &quot;CO2 EMIS.&quot;     
+##  [17] &quot;BALANCE&quot;        &quot;BALANCE_std&quot;    &quot;BALANCE_min&quot;    &quot;BALANCE_max&quot;   
+##  [21] &quot;ROW BAL.&quot;       &quot;PSP&quot;            &quot;MISC. NDG&quot;      &quot;LOAD&quot;          
+##  [25] &quot;LOAD_std&quot;       &quot;LOAD_min&quot;       &quot;LOAD_max&quot;       &quot;H. ROR&quot;        
+##  [29] &quot;H. ROR_std&quot;     &quot;H. ROR_min&quot;     &quot;H. ROR_max&quot;     &quot;WIND&quot;          
+##  [33] &quot;WIND_std&quot;       &quot;WIND_min&quot;       &quot;WIND_max&quot;       &quot;SOLAR&quot;         
+##  [37] &quot;SOLAR_std&quot;      &quot;SOLAR_min&quot;      &quot;SOLAR_max&quot;      &quot;NUCLEAR&quot;       
+##  [41] &quot;NUCLEAR_std&quot;    &quot;NUCLEAR_min&quot;    &quot;NUCLEAR_max&quot;    &quot;LIGNITE&quot;       
+##  [45] &quot;LIGNITE_std&quot;    &quot;LIGNITE_min&quot;    &quot;LIGNITE_max&quot;    &quot;COAL&quot;          
+##  [49] &quot;COAL_std&quot;       &quot;COAL_min&quot;       &quot;COAL_max&quot;       &quot;GAS&quot;           
+##  [53] &quot;GAS_std&quot;        &quot;GAS_min&quot;        &quot;GAS_max&quot;        &quot;OIL&quot;           
+##  [57] &quot;OIL_std&quot;        &quot;OIL_min&quot;        &quot;OIL_max&quot;        &quot;MIX. FUEL&quot;     
+##  [61] &quot;MIX. FUEL_std&quot;  &quot;MIX. FUEL_min&quot;  &quot;MIX. FUEL_max&quot;  &quot;MISC. DTG&quot;     
+##  [65] &quot;MISC. DTG_std&quot;  &quot;MISC. DTG_min&quot;  &quot;MISC. DTG_max&quot;  &quot;H. STOR&quot;       
+##  [69] &quot;H. STOR_std&quot;    &quot;H. STOR_min&quot;    &quot;H. STOR_max&quot;    &quot;UNSP. ENRG&quot;    
+##  [73] &quot;UNSP. ENRG_std&quot; &quot;UNSP. ENRG_min&quot; &quot;UNSP. ENRG_max&quot; &quot;SPIL. ENRG&quot;    
+##  [77] &quot;SPIL. ENRG_std&quot; &quot;SPIL. ENRG_min&quot; &quot;SPIL. ENRG_max&quot; &quot;LOLD&quot;          
+##  [81] &quot;LOLD_std&quot;       &quot;LOLD_min&quot;       &quot;LOLD_max&quot;       &quot;LOLP&quot;          
+##  [85] &quot;AVL DTG&quot;        &quot;AVL DTG_std&quot;    &quot;AVL DTG_min&quot;    &quot;AVL DTG_max&quot;   
+##  [89] &quot;DTG MRG&quot;        &quot;DTG MRG_std&quot;    &quot;DTG MRG_min&quot;    &quot;DTG MRG_max&quot;   
+##  [93] &quot;MAX MRG&quot;        &quot;MAX MRG_std&quot;    &quot;MAX MRG_min&quot;    &quot;MAX MRG_max&quot;   
+##  [97] &quot;NP COST&quot;        &quot;NP COST_std&quot;    &quot;NP COST_min&quot;    &quot;NP COST_max&quot;   
+## [101] &quot;NODU&quot;           &quot;NODU_std&quot;       &quot;NODU_min&quot;       &quot;NODU_max&quot;      
+## [105] &quot;newColumn&quot;</code></pre>
+<pre class="r"><code>names(myData$links)</code></pre>
+<pre><code>## [1] &quot;link&quot;         &quot;timeId&quot;       &quot;time&quot;         &quot;day&quot;         
+## [5] &quot;month&quot;        &quot;hour&quot;         &quot;FLOW LIN.&quot;    &quot;CONG. PROB +&quot;
+## [9] &quot;CONG. PROB -&quot;</code></pre>
+<pre class="r"><code>myData$links[, newColumnLink:= `CONG. PROB +`+`CONG. PROB -`]
+names(myData$links)</code></pre>
+<pre><code>##  [1] &quot;link&quot;          &quot;timeId&quot;        &quot;time&quot;          &quot;day&quot;          
+##  [5] &quot;month&quot;         &quot;hour&quot;          &quot;FLOW LIN.&quot;     &quot;CONG. PROB +&quot; 
+##  [9] &quot;CONG. PROB -&quot;  &quot;newColumnLink&quot;</code></pre>
 </div>
 </div>
 <div id="links" class="section level1">

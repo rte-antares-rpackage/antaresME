@@ -17,6 +17,8 @@ knitr::opts_chunk$set(echo = TRUE)
 #param of all examples
 pathStudy<-"E:\\ANTARES\\Exemple_antares\\2_exemple_etudes_importantes\\TYNDP\\ST2030\\ST2030"
 
+pathStudyL<-"E:\\ANTARES\\Exemple_antares\\3_petit_exemple\\PackagesR\\Test_packages_R_602"
+
 ```
 
 
@@ -140,6 +142,75 @@ typeof(myDataTA)
 class(myDataTL)
 typeof(myDataTL)
 ```
+
+## How can I get the names of the columns ? 
+
+Import your data 
+
+```{r importListColumn, echo=TRUE}
+library(antaresRead)
+#pathStudy : path to my study 
+suppressWarnings(opts<-setSimulationPath(pathStudyL,-1))
+myData<-suppressWarnings(readAntares(areas = "all", links = "all", showProgress = FALSE, select = c("economy", "FLOW LIN.", "CONG. PROB +", "CONG. PROB -")))
+```
+
+Check the list
+
+```{r CheckListColumn, echo=TRUE}
+names(myData$areas)
+
+names(myData$links)
+```
+
+## How can I edit an existing column in an antaresData or in an data.table ? 
+
+Import your data 
+
+```{r importEditColumn, echo=TRUE}
+library(antaresRead)
+#pathStudy : path to my study 
+suppressWarnings(opts<-setSimulationPath(pathStudyL,-1))
+myData<-suppressWarnings(readClusterDesc())
+myData
+```
+
+Edit an existing column
+
+```{r EditColumn, echo=TRUE}
+
+dim(myData[is.na(co2), ])[1]
+
+#When co2 is na, replace the value by 0
+myData[is.na(co2), co2:=0]
+
+dim(myData[is.na(co2), ])[1]==0
+
+myData
+```
+
+## How can I add a new column in an antaresData or in a data.table ? 
+
+Import your data 
+
+```{r importAddNewColumn, echo=TRUE}
+library(antaresRead)
+#pathStudy : path to my study 
+suppressWarnings(opts<-setSimulationPath(pathStudyL,-1))
+myData<-suppressWarnings(readAntares(areas = "all", links = "all", showProgress = FALSE, select = c("allAreas", "FLOW LIN.", "CONG. PROB +", "CONG. PROB -")))
+```
+
+Add a new column
+
+```{r addNewColumn, echo=TRUE}
+names(myData$areas)
+myData$areas[, newColumn:=LOAD*0.5+WIND-SOLAR]
+names(myData$areas)
+
+names(myData$links)
+myData$links[, newColumnLink:= `CONG. PROB +`+`CONG. PROB -`]
+names(myData$links)
+```
+
 
 # Links 
 
