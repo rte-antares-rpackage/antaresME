@@ -1,0 +1,54 @@
+---
+title: "antaresViz 0.13 new features"
+author: "Jalal-Edine ZAWAM"
+date: "12 juin 2018"
+output:
+    html_document:
+      number_sections: yes
+      toc: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+`antaresViz-0.13` is on CRAN. It includes new features. This document introduces some of them. 
+
+
+## Plot a stack for annual data 
+
+`prodStack()` and `exchangesStack()` can plot annual data. 
+
+![](inst/dataViz/annualData2.gif)
+
+## Save a plot in PNG or HTML
+
+Download a plot in PNG and integrate it into a PowerPoint. Currently, maps can only be downloaded in HTML. 
+
+![](inst/dataViz/saveAsPng2.gif)
+
+## Plot several Monte Carlo years 
+
+`tsPlot` can now plot several variables for several Monte Carlo years. 
+
+![](inst/dataViz/tsMcSeveral.gif)
+
+## Save time using aliases 
+
+Set an alias on plotMap to save time. `plotMap()` has a new argument `typeSizeAreaVars` to take into account all aliases set in `antaresViz`. 
+
+![](inst/dataViz/setAliasMap2.gif)
+
+## Change the language from English to French
+
+All parameters and captions have an equivalent in French. 
+
+![](inst/dataViz/changeTheLanguage2.gif)
+
+## Ask for new features easily 
+
+From `antaresViz`, ask a new feature by clicking on github icon.  
+
+![](inst/dataViz/askANewFeature2.gif)
