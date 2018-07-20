@@ -1,0 +1,164 @@
+---
+title: "antaresViz"
+author: "Jalal-Edine ZAWAM"
+date: "20 juillet 2018"
+output:
+    html_document:
+      number_sections: yes
+      toc: yes
+---
+
+```{r param, echo=FALSE}
+
+#param of all examples
+pathStudy <- "E:\\ANTARES\\Exemple_antares\\2_exemple_etudes_importantes\\TYNDP\\ST2030\\ST2030"
+
+pathStudyL <- "E:\\ANTARES\\Exemple_antares\\3_petit_exemple\\PackagesR\\Test_packages_R_602"
+
+```
+
+
+# Introduction
+
+`antaresViz` is on [CRAN](https://cran.r-project.org/web/packages/antaresViz/index.html). This package can help you to visualize results from the open source software ANTARES, more information about ANTARES [here](https://github.com/AntaresSimulatorTeam/Antares_Simulator). 
+
+This documentation will present some new examples for `antaresViz` and also how to use R, data.table and RStudio. 
+
+# How to represent the generation mix for each country?
+
+Here we have to use the `prodStack` function.
+
+```{r prodStackHelp, eval=FALSE}
+#you can visualize prodStack help with this command on RStudio
+#you will find some examples
+??prodStack
+
+```
+
+## Generation mix for hourly data
+
+```{r importHourlyData, echo=TRUE}
+suppressMessages(library(antaresViz))
+#pathStudy : path to my study 
+suppressWarnings(opts <- setSimulationPath(pathStudy,-1))
+myData <- suppressWarnings(readAntares(areas = "fr", showProgress = FALSE))
+
+prodStack(myData, interactive = FALSE, areas = "fr", dateRange = c("2018-07-01", "2018-07-05"))
+
+#prodStack can also be an interactive application, a user can set this behaviour in two ways: 
+#1. do not set the "interactive" parameter (by default, interactive is set to TRUE)
+#2. set "interactive" parameter to TRUE
+
+#run it in your console
+#prodStack(myData, areas = "fr", dateRange = c("2018-07-01", "2018-07-05"))
+
+#run it in your console
+#prodStack(myData, interactive = TRUE, areas = "fr", dateRange = c("2018-07-01", "2018-07-05"))
+
+```
+
+
+One can also include `prodStack` in a shiny app like for the adequacy French report 
+[bpnumerique](http://bpnumerique.rte-france.com/), tab "Analyse detaillee".
+
+## Generation mix for daily, weekly or monthly data
+```{r importDWMData, echo=TRUE}
+suppressMessages(library(antaresViz))
+#pathStudy : path to my study 
+suppressWarnings(opts <- setSimulationPath(pathStudy,-1))
+myDataD <- suppressWarnings(readAntares(areas = "fr", showProgress = FALSE, timeStep = "daily"))
+myDataW <- suppressWarnings(readAntares(areas = "fr", showProgress = FALSE, timeStep = "weekly"))
+myDataM <- suppressWarnings(readAntares(areas = "fr", showProgress = FALSE, timeStep = "monthly"))
+
+dataRangeEx <- c("2018-06-25", "2018-07-05")
+prodStack(myDataD, interactive = FALSE, areas = "fr", dateRange = dataRangeEx)
+prodStack(myDataW, interactive = FALSE, areas = "fr", dateRange = dataRangeEx)
+prodStack(myDataM, interactive = FALSE, areas = "fr", dateRange = c("2018-05-01", "2018-09-30"))
+
+#try to plot weekly data for one week in your console 
+#try to plot monthly data for one month in your console 
+#prodStack(myDataW, interactive = FALSE, areas = "fr", dateRange = c("2018-07-01", "2018-07-05"))
+#prodStack(myDataM, interactive = FALSE, areas = "fr", dateRange = c("2018-05-01", "2018-05-30"))
+
+```
+
+## Generation mix for annual data
+```{r importAnnualData, echo=TRUE}
+suppressMessages(library(antaresViz))
+#pathStudy : path to my study 
+suppressWarnings(opts <- setSimulationPath(pathStudy,-1))
+myDataA <- suppressWarnings(readAntares(areas = "fr", showProgress = FALSE, timeStep = "annual"))
+
+prodStack(myDataA, interactive = FALSE, areas = "fr")
+```
+
+# How to represent LOLD and ENS for each country? 
+
+## With plot it's easy 
+`plot` help you to visualize a time series and can also help you to visualize LOLE and ENS. 
+
+```{r plotLOLE, echo=TRUE}
+suppressMessages(library(antaresViz))
+#pathStudy : path to my study 
+suppressWarnings(opts <- setSimulationPath(pathStudy,-1))
+#get only some areas 
+myAreas <- c("fr", "fi", "be")
+myDataH <- suppressWarnings(readAntares(areas = myAreas, showProgress = FALSE))
+
+#one country and one variable
+plot(myDataH, interactive = FALSE, elements = "fr", variable = "UNSP. ENRG")
+#one country and several variables
+plot(myDataH, interactive = FALSE, elements = "fr", variable = c("UNSP. ENRG", "LOLD", "LOLP"))
+#several countries and one variable
+plot(myDataH, interactive = FALSE, elements = c("fr", "fi", "be"), variable = c("UNSP. ENRG"))
+#several countries and several variables
+plot(myDataH, interactive = FALSE, elements = c("fr", "fi", "be"), variable = c("UNSP. ENRG", "LOLD", "LOLP"))
+#one country and several variables but with monotone
+plot(myDataH, interactive = FALSE, elements = "be", variable = c("WIND", "SOLAR"), type = "monotone")
+
+```
+
+## Other possibilities
+
+`plot` can be used with `type` "barplot", "density", "cdf" or "heatmap" to visualize some variables like "LOLD". 
+
+`prodStack` can also be used to visualize a lack of production. 
+
+
+```{r prodStackLOLE, echo=TRUE}
+suppressMessages(library(antaresViz))
+#pathStudy : path to my study 
+suppressWarnings(opts <- setSimulationPath(pathStudy,-1))
+#get only some areas 
+myAreas <- c("fr", "fi", "be")
+myDataH <- suppressWarnings(readAntares(areas = myAreas, showProgress = FALSE))
+
+dateWithENS <- myDataH[LOLD >0 , time][1]
+dateWithENS
+firstDate <- dateWithENS - 60*60*24
+lastDate <- dateWithENS + 60*60*24
+prodStack(myDataH, interactive = FALSE, areas = "fr", dateRange = c(firstDate, lastDate))
+
+```
+
+## For several simulations
+```{r plotLoleSims, echo=TRUE}
+suppressMessages(library(antaresViz))
+#pathStudy : path to my study 
+suppressWarnings(opts <- setSimulationPath(pathStudy,-1))
+#only some variables
+varToGet <- c("UNSP. ENRG", "LOLD", "LOLP")
+myDataS1 <- suppressWarnings(readAntares(areas = "fr", showProgress = FALSE, select = varToGet))
+suppressWarnings(opts <- setSimulationPath(pathStudy,-2))
+myDataS2 <- suppressWarnings(readAntares(areas = "fr", showProgress = FALSE, select = varToGet))
+
+#one simulation and one variable
+plot(myDataS1, interactive = FALSE, elements = "fr", variable = "UNSP. ENRG")
+plot(myDataS2, interactive = FALSE, elements = "fr", variable = "UNSP. ENRG")
+
+#plot in the same graph the two variables
+myDataS1[, unspEnrgS1 := `UNSP. ENRG`]
+myDataS1[, unspEnrgS2 := myDataS2$`UNSP. ENRG`]
+plot(myDataS1, interactive = FALSE, elements = "fr", variable = c("unspEnrgS1", "unspEnrgS2"))
+
+```
