@@ -16,7 +16,7 @@ library(antaresViz)
 
 # Introduction
 
-`plotMap()` is one of the best `antaresViz` function. But to be able to change color areas, we have to provide a layout. This document will show how to build an useful layout.
+`plotMap()` is one of the best `antaresViz` function. But to be able to change color areas, we have to provide a layout. This document will show how to build a useful layout.
 
 Install `antaresViz` with :
 
