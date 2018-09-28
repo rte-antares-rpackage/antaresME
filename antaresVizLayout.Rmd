@@ -266,3 +266,56 @@ plotMap(x = refData,
 
 ```
 
+## Get a layout from another source 
+
+A user can choose to import a different layout from the default one. 
+The default one is obtained from `spMaps::getSpMaps()`. Anyone can download some `SpatialPolygonsDataFrame`, for example, from [here](https://gadm.org/download_country_v3.html). 
+
+Here, we have choose :
+- Spain, Level 1 ;
+- Belgium, Level 1 ;
+- France, Level 2. 
+
+```{r rbindSP, echo = TRUE, eval = TRUE}
+
+#before using it in mapLayout, we must read all the files 
+
+sp1 <- readRDS(file = "inst/sp/gadm36_ESP_1_sp.rds")
+be1 <- readRDS(file = "inst/sp/gadm36_BEL_1_sp.rds")
+fr2 <- readRDS(file = "inst/sp/gadm36_FRA_2_sp.rds")
+
+#same level use rbind
+spBe <- rbind(sp1, be1) 
+#different level use union
+spBeFr <- union(spBe, fr2) 
+mlNewMap <- mapLayout(layout = posLayout, map = spBeFr)
+saveRDS(object = mlNewMap,
+        file = "inst/mlNewMap.RDS")
+
+```
+
+.......
+
+```{r plotMapLayoutCT, echo = TRUE, eval = TRUE}
+
+mlNewMap <- readRDS(file = "inst/mlNewMap.RDS")
+plotMapLayout(mlNewMap)
+
+```
+
+.......
+
+```{r plotMapCT, echo = TRUE, eval = TRUE}
+
+plotMap(x = refData,
+        mapLayout = mlNewMap,
+        interactive = FALSE,
+        colAreaVar = "LOAD",
+        colLinkVar = "FLOW LIN.",
+        type = "avg",
+        typeSizeAreaVars = TRUE,
+        aliasSizeAreaVars = c("generation", "renewable"),
+        sizeMiniPlot = TRUE,
+        areaChartType = "pie")
+
+```
