@@ -266,7 +266,7 @@ plotMap(x = refData,
 
 ```
 
-## Get a layout from another source 
+# Get a layout from another source 
 
 A user can choose to import a different layout from the default one. 
 The default one is obtained from `spMaps::getSpMaps()`. Anyone can download some `SpatialPolygonsDataFrame`, for example, from [here](https://gadm.org/download_country_v3.html). 
@@ -276,9 +276,9 @@ Here, we have choose :
 - Belgium, Level 1 ;
 - France, Level 2. 
 
-```{r rbindSP, echo = TRUE, eval = TRUE}
+```{r rbindSP, echo = TRUE, eval = FALSE}
 
-#before using it in mapLayout, we must read all the files 
+#before using it in mapLayout, we must read all files 
 
 sp1 <- readRDS(file = "inst/sp/gadm36_ESP_1_sp.rds")
 be1 <- readRDS(file = "inst/sp/gadm36_BEL_1_sp.rds")
@@ -296,7 +296,7 @@ saveRDS(object = mlNewMap,
 
 .......
 
-```{r plotMapLayoutCT, echo = TRUE, eval = TRUE}
+```{r plotMapLayoutNewSP, echo = TRUE, eval = TRUE}
 
 mlNewMap <- readRDS(file = "inst/mlNewMap.RDS")
 plotMapLayout(mlNewMap)
@@ -305,7 +305,7 @@ plotMapLayout(mlNewMap)
 
 .......
 
-```{r plotMapCT, echo = TRUE, eval = TRUE}
+```{r plotMapNSP, echo = TRUE, eval = TRUE}
 
 plotMap(x = refData,
         mapLayout = mlNewMap,
